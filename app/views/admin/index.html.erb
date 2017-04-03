@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hello</title>
+</head>
+<body>
+ 
+
+
+ <% @request.each do |request|%>
+ 	<div class="col-md-3">
+	<a href="/books/<%= request.id %>">
+		<%= image_tag request.book_img.url(:book_index), class: "book" %>
+	</a>
+</div>	
+ 	<li><%= request.user.email %>||<%= link_to "accept",admin_path(request), method: :put %>
+ 	  
+ 	|| <%= link_to "reject", book_path(request), method: :delete, data: { confirm: 'Are you sure?' }  %></li>
+
+ <% end %>
+</body>
+</html>
