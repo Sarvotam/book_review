@@ -3,4 +3,5 @@ class ProfilesController < ApplicationController
 	def index
 		@profiles = current_user.books.all
 	end
+
 end

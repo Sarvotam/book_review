@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
 	  before_action :authenticate_admin!
   def index
-  	
   	@request = Book.all.where(book_request: false)
   end
 
