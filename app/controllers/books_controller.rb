@@ -6,6 +6,7 @@ class BooksController < ApplicationController
 	def index
 		if params[:category].blank?
 			@books = Book.all.order("created_at DESC")
+			# stop before accepting the book by admin to show
 			@books = Book.all.where(book_request: true)
 			
 		else
