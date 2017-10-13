@@ -22,6 +22,9 @@ class ReviewsController < ApplicationController
 	end
 
 	def edit
+		if @review.user_id != current_user.id
+			redirect_to root_url
+		end
 	end
 
 	def update

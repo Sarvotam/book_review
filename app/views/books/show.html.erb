@@ -11,17 +11,178 @@
 		<div class="book-info">
 
 			<h2 class="book-title"><%= @book.title %></h2>
-			<h3 class="book-author"><span>From</span> <%= @book.author %></h3>
+			<h3 class="book-author"><span style="color: ; font-size: 24px;"><b>From:</b></span>&nbsp; <%= @book.author %></h3>
 			<h2 class="avg-rating">Average Rating</h2>
 			<div class="average-review-rating" data-score=<%= @average_review %>></div>
 			<span class="number-of-reviews">Based on <%= @book.reviews.count %> reviews</span>
 			<p class="book-desc"><%= @book.description %></p>
+
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+.success {background-color: #2c2f2d;} /* Green */
+.success:hover {background-color: #5f5f5f;}
+.btn {
+    border: none;
+    color: #ffffff;
+    padding: 9px 0px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+.btn:hover {color: #ffffff;}
+</style>
+</head>
+<body>
+<% if user_signed_in? %>
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+<div class="demo">
+
+  			
+			
+   		<div id="seat-map"><br>
+			<div class="front">SCREEN</div>					
+		</div>	
+		
+		<div class="booking-details">
+		<br><br>
+		<form method="POST" action="/seats" id="bookform" name="bookform">
+			<div class="form-group">	
+<!-- 			<p>Movie: <span> <input type=text name="book_id" value="<%= @book.id%>" readonly></span></p>
+ -->		
+
+			</div>
+		
+
+
+			<div class="form-group">
+			
+			<p  style="color: white;">Seat: </p>
+
+			</div>
+			<ul id="selected-seats"></ul>
+
+			<div class="form-group">
+				<p  style="color: white;">Tickets: <span id="counter"  style="color: green;">0</span></p>
+				<input type=hidden name="counterliney" id="counterliney" value="">
+				
+
+
+					
+				<input type=hidden name="seat" id="seat" value="">
+			</div>
+
+
+			<input type="hidden" name="book_id" value="<%= @book.id %>" >
+			<p  style="color: white;">Total: <b>Rs.<span id="total"  style="color: green;">0</span></b></p>
+			<button class="btn btn-info btn">Book</button>
+				</form>	
+			<!--<button class="checkout-button">Book</button>-->
+					
+			<div id="legend"></div>
+		</div>
+		<div style="clear:both"></div>
+   </div>
+</div>
+<%end%>
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">
+<% if user_signed_in? %>
+<button class="btn success">Get your ticket and enjoy the movie</button></span>
+<%end%>
+<script>
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+}
+</script>
 
 		</div>
 	</div>
 
 
 </div>
+
+
+<br>
+<% if user_signed_in? %>
+	<% @seat=Seat.all.where(book_id: @book.id) %>
+		<% @sea='' %>
+		<%y=0%>
+	 	<% @seat.each do |x| %>
+			<% y+=1%>
+			<% @seat.count%> 
+			<% if (y==@seat.count)%>
+			   	<% @sea+=x.row_col%>
+			  	<%else%>
+			   	<% @sea+=x.row_col+"||"%>
+		<% end %>
+  	<%end%> 
+<%end %>
+
+
+
+
+
+
+
 
 <div class="row">
 
@@ -33,8 +194,11 @@
 			<h1>Reviews</h1>
 			<div class="all-reviews">
 				<%= render @reviews %>
-			</div>	
+			</div>
+			
+			<% if user_signed_in? %>
 			<%= render  'reviews/form'%>
+			<%end%>
 			
 
 		</div>	
@@ -45,7 +209,7 @@
 
 <div class="links btn-group">
 
-	<%= link_to "Back", root_path, class: "btn btn-custom" %>
+	<!--  <%= link_to "Back", root_path, class: "btn btn-custom" %> -->
 
 	<% if user_signed_in? %>
 
@@ -80,4 +244,141 @@
 			return $(this).attr('data-score')
 		}
 	});
+</script>
+<script type="text/javascript">
+	var price = 450; //price
+$(document).ready(function() {
+	var $cart = $('#selected-seats'), //Sitting Area
+	$counter = $('#counter'), //Votes
+	$total = $('#total'); //Total money
+	
+	var sc = $('#seat-map').seatCharts({
+		map: [  //Seating chart
+			'__aaaaaa__',
+            'aaaaaaaaaa',
+            '__________',
+            '_aa_aa_aa_',
+            'aaaaaaaaaa',
+			'aaaaaaaaaa',
+			'aaaaaaaaaa',
+			'aaaaaaaaaa',
+			'aaaaaaaaaa',
+            'aaaaaaaaaa'
+		],
+		naming : {
+			top : false,
+			getLabel : function (character, row, column) {
+				return column;
+			}
+		},
+		legend : { //Definition legend
+			node : $('#legend'),
+			items : [
+				[ 'a', 'available',   'available' ],
+				[ 'a', 'unavailable', 'Booked']
+			]					
+		},
+		click: function () { //Click event
+			if (this.status() == 'available') { //optional seat
+				$('<li>'+(this.settings.row+1)+'_'+this.settings.label+'</li>')
+					.attr('id', 'cart-item-'+this.settings.id)
+					.data('seatId', this.settings.id)
+					.appendTo($cart);
+
+				$counter.text(sc.find('selected').length+1);
+				$total.text(recalculateTotal(sc)+price);
+							
+				return 'selected';
+			} else if (this.status() == 'selected') { //Checked
+					//Update Number
+					$counter.text(sc.find('selected').length-1);
+					//update totalnum
+					$total.text(recalculateTotal(sc)-price);
+						
+					//Delete reservation
+					$('#cart-item-'+this.settings.id).remove();
+					//optional
+					return 'available';
+			} else if (this.status() == 'unavailable') { //sold
+				return 'unavailable';
+			} else {
+				return this.style();
+			}
+		}
+	});
+	//sold seat
+
+	
+	//sc.get().status('unavailable');
+		
+});
+//sum total money
+
+function recalculateTotal(sc) {
+	var total = 0;
+	sc.find('selected').each(function () {
+		total += price;
+	});
+			
+	return total;
+}
+
+
+//to navigate to bookingpage
+$(document).ready(function(){
+  $( "#bookform" ).submit(function(event) {
+    var  counter = $("#counter").text();
+    
+    $("#counterliney").val(counter);
+    });
+});
+</script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	  $( "#bookform" ).submit(function(event) {
+    var  counter = $("#counter").text();
+    // event.preventDefault();
+    $("#counterliney").val(counter);
+    var seat=null;
+    $('#selected-seats li').each(function (i) {
+        var index = $(this).text();
+      	seat = seat +","+ index;
+    }); 
+    
+	    $("#seat").val(seat);
+
+	    if (counter>8)
+	    	{ alert("You can only book 8 tickets. Thank you!!!");
+	    		event.preventDefault();
+	    	}
+	    	else{
+			var r = confirm("Are you sure,you want to book ticket!");
+			if (r == true) {
+	    		
+			} else {
+			    event.preventDefault();
+			}
+		}
+			    
+	});
+});
+</script>
+<script type="text/javascript">
+
+					var sum = "<%= @sea %>";
+					// alert(sum);
+				var res = sum.split("||");
+					$(document).ready(function(){
+						
+						for (i = 0; i < res.length; ++i) {
+							// alert(res[i]);
+    						   $("#"+res[i]).removeClass('available').addClass('unavailable');
+
+						}
+					
+
+   					});
+
 </script>

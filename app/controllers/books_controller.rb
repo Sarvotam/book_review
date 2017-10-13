@@ -1,14 +1,11 @@
 class BooksController < ApplicationController
+
 	before_action :find_book, only: [:show, :edit, :update, :destroy]
 	before_action :authenticate_user!, only: [:new, :edit]
+	before_action :authenticate_admin!, only: [:edit, :update, :destroy, :new]
 
 	def index
-		if user_signed_in?
-			 @pending = current_user.books.where(book_request: false) 
-			@accept = current_user.books.where(book_request: true) 
-		end
-
-			if params[:category].blank?
+		if params[:category].blank?
 			@books = Book.all.order("created_at DESC")
 			@books = Book.all.where(book_request: true)
 			
@@ -25,7 +22,7 @@ class BooksController < ApplicationController
 			if @book.reviews.blank?
 				@average_review = 0
 			else
-				@average_review = @book.reviews.average(:rating).round(2)
+				@average_review = @book.reviews.average(:rating)
 			end
 			@reviews = @book.reviews
 		else
@@ -35,6 +32,7 @@ class BooksController < ApplicationController
 	end
 
 	def new
+
 		@book = current_user.books.build
 		@categories = Category.all.map{ |c| [c.name, c.id] }
 	end
@@ -79,4 +77,11 @@ class BooksController < ApplicationController
 			@book = Book.find(params[:id])
 		end
 
+		def authenticate_admin!
+  		if !current_user.admin
+  		redirect_to root_path
+  		end
+  	
+  end
+		
 end

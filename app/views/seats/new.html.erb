@@ -1,0 +1,20 @@
+<h1>Seats#new</h1>
+<p>Find me in app/views/seats/new.html.erb</p>
+<br>
+
+
+<% if user_signed_in? %>
+	<% @seat=Seat.all.where(book_id: @book.id) %>
+	<% @sea='' %>
+	<%y=0%>
+ 	<% @seat.each do |x| %>
+		<% y+=1%>
+		<% @seat.count%> 
+		<% if (y==@seat.count)%>
+		   	<% @sea+=x.row_col%>
+		  	<%else%>
+		   	<% @sea+=x.row_col+","%>
+		 <% end %>
+  	<%end%>
+  <b>Movie ticket seats::</b><%=@sea%>
+<%end %>

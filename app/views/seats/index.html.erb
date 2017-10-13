@@ -1,0 +1,17 @@
+
+
+<% if user_signed_in? %>
+
+	
+			<%@seat=Seat.all
+				@sea='' %> 
+				<% @seat.each do |x| %>
+				
+					<%  @sea+=x.row_col+","   %>	
+							 <%= link_to "Delete", seat_path(x), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-custom" %>
+
+				<%end%>
+
+	Movie ticket::	<%=@sea%>
+	<%end%>
+	
