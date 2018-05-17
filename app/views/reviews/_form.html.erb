@@ -1,0 +1,16 @@
+<!-- @book => first parameter getting current instance of book -->
+<!-- @book.reviews.build =>second parameter build the revies form the book -->
+<%= simple_form_for([@book, @book.reviews.build], remote: true)  do |f| %>
+	<div id="rating-form">
+		<label>Rating</label>
+	</div>
+	<%= f.input :comment %>
+	<%= f.button :submit, :class => "btn-custom2" %>
+<% end %>
+
+<script>
+	$('#rating-form').raty({
+		path: '/assets/',
+		scoreName: 'review[rating]'
+	});
+</script>

@@ -1,0 +1,364 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Lora|Ubuntu:300,400,500); 
+
+/* Variables, mixins, etc.. */
+
+@mixin background-tile {
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 3px 3px 5px 6px #ccc;
+	padding: 1.5em 1.25em;
+}
+
+
+/* General styles */
+
+body {
+	background-color: #f5f5f5;
+	font-family: 'Lora', serif;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 300;
+}
+
+p.alert, p.notice {
+	margin: 0;
+}
+
+
+/* Navbar/navigation styles */
+
+.navbar {
+	font-family: 'Ubuntu', sans-serif;
+	text-transform: uppercase;
+}
+.navbar-default {
+	background-color: #000000;
+	padding-bottom: 0px;
+	padding-top: 0px;
+
+	.navbar-nav > li > a {
+		color: #fff;
+		&:hover {
+			color: darken(#f1c40f, 5%);
+			transition: 0.5s;
+		}
+	}
+
+	.navbar-header {
+
+		.navbar-brand {
+			color: #fff;
+			letter-spacing: 1.4px;
+		}
+
+	}
+
+	.dropdown-menu > li > a:hover {
+		background-color: darken(#f1c40f, 5%);
+		color: #fff;
+	}
+
+	.navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
+		background-color: darken(#f1c40f, 5%);
+		color: #fff;	
+	}
+
+}
+
+.dropdown-menu > .active > a {
+	background-color: #f1c40f;
+	color: #fff;
+}
+
+
+/* Button/link styles */
+
+.btn-custom {
+	color: darken(#f1c40f, 5%);
+	background-color: #000;
+	border: 1px solid darken(#f1c40f, 5%);
+	padding: 8px 20px;
+	border-radius: 5px;
+	font-family: 'Ubuntu', sans-serif;
+	&:hover {
+		text-decoration: none;
+		background-color: darken(#f1c40f, 5%);
+		color: #fff;
+		transition: 0.5s;
+	}
+}
+
+.btn-custom2 {
+	color: #ffffff;
+	background-color: rgba(0, 0, 0, 0.73);
+	border: 1px solid #222;
+	padding: 8px 20px;
+	border-radius: 5px;
+	font-family: 'Ubuntu', sans-serif;
+	&:hover {
+		text-decoration: none;
+		background-color: #333;
+		color: #fff;
+		transition: 0.5s;
+	}	
+}
+
+.links {
+
+	.btn-custom {
+		padding: 3px 10px;
+		font-weight: 300;
+	}
+
+}
+
+.book-links {
+
+	.btn-custom {
+		padding: 3px 10px;
+		font-weight: 300;
+		margin-top: 40px;	
+	}
+
+}
+
+/* Book styles */
+
+.book {
+	height: 350px;
+	width: 250px;
+	margin-bottom: 13px;
+	margin-top: 24px;
+	@include background-tile;
+}
+
+.book-show {
+	height: 475px;
+	width: 325px;
+	@include background-tile;
+}
+
+.book-info {
+	@include background-tile;
+
+	.book-title {
+		margin-top: 0;
+		font-size: 2em;
+	}
+
+	.avg-rating {
+		font-size: 1.5em;
+		margin-top: 15px;
+		margin-bottom: 5px;
+	}
+
+	.number-of-reviews {
+		font-size: 0.85em;
+		font-style: italic;
+	}
+
+	.book-author {
+		font-size: 1.5em;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		span {
+			font-size: 0.80em;
+		}	
+	}
+
+	.book-desc {
+		font-size: 1.05em;
+		line-height: 1.5;
+		margin-bottom: 15px;
+		margin-top: 15px;
+	}
+
+}
+
+
+/* current-category styles */
+
+.current-category {
+	margin-bottom: 0px;
+}
+
+
+/* Reviews styles */
+
+.reviews {
+
+	@include background-tile;
+	margin-top: 40px;
+
+	h1 {
+		margin-top: 0;
+		margin-bottom: 15px;
+		font-size: 2em;
+	}
+
+	.review {
+		border-bottom: 1px solid gainsboro;
+		margin-bottom: 15px;
+		padding-bottom: 10px;
+
+		.review-comment {
+			font-size: 1.05em;
+			line-height: 1.5;
+		}
+
+	}
+
+	.new-review {
+		padding-top: 8px;
+	}
+
+}
+
+/* New Book Form styles */
+
+.new-book-form {
+	@include background-tile;
+
+	h1 {
+		margin-top: 0;
+	}
+
+	#category_id {
+		margin-bottom: 10px;
+	}
+
+	#book_book_img {
+		margin-bottom: 10px;
+	}
+
+}
+
+
+/* Edit Book Form styles */
+
+.edit-book-form {
+
+	@include background-tile;
+
+	h1 {
+		margin-top: 0;
+	}
+
+	#book_category_id {
+		margin-bottom: 10px;
+	}
+
+	#book_book_img {
+		margin-bottom: 10px;
+	}
+
+}
+
+/* New/Edit review form styles */
+
+.new-review-form, .edit-review-form {
+	@include background-tile;
+
+	h1 {
+		margin-top: 0;
+	}
+
+	#rating-form {
+		margin-bottom: 15px;
+
+		label {
+			display: block;
+		}
+
+	}
+
+}
+
+
+/* Signup/Login form styles */
+
+.signup-form {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+
+}
+
+.login-form {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+
+}
+
+/*Booking css start*/
+.front
+{width: 730px;margin: 5px 32px 45px 32px;background-color: #1a7af0; color: white;text-align: center;padding: 3px;border-radius: 5px;} 
+
+.booking-details 
+{float: right;position: relative;left:-100px;width:220px;height: 650px; } 
+
+.booking-details h3 {margin: 5px 5px 0 0;font-size: 16px;} 
+
+.booking-details p{line-height:26px; font-size:16px; color:black;} 
+
+.booking-details p span{color:#180458;} 
+
+div.seatCharts-cell {color: #1a95f5;height: 25px;width: 50px;line-height: 25px;margin: 8px;float: left;text-align: center;outline: none;font-size: 13px;} 
+
+div.seatCharts-seat {color: #fff;cursor: pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius: 5px;} 
+
+div.seatCharts-row {height: 35px;} 
+
+div.seatCharts-seat.available {background-color: blue;} 
+
+div.seatCharts-seat.focused {background-color: #f0661a;border: none;} 
+
+div.seatCharts-seat.selected {background-color: #00ff06;} 
+
+div.seatCharts-seat.unavailable {background-color: #f01a66;cursor: not-allowed;} 
+
+div.seatCharts-seat.sold {background-color: black ;cursor: not-allowed;} 
+
+div.seatCharts-container {border-right: 1px solid #303030;width: 810px;padding: 20px;float: left;} 
+
+div.seatCharts-legend {padding-left: 0px;position: absolute;bottom: 16px;} 
+
+ul.seatCharts-legendList {padding-left: 0px;} 
+
+.seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;} 
+
+span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;} 
+
+.checkout-button {display: block;width:80px; height:24px; line-height:20px;margin: 10px auto;border:1px solid #999;font-size: 14px; cursor:pointer} 
+
+#selected-seats {max-height: 150px;overflow-y: auto;overflow-x: none;width: 200px;} 
+
+#selected-seats li{float:left; width:72px; height:26px; line-height:26px; border:1px solid #d3d3d3; background:#f7f7f7; margin:6px; font-size:14px; font-weight:bold; text-align:center} 
+
+/*Booking css end*/

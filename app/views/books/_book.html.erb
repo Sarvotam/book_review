@@ -1,0 +1,8 @@
+<div class="col-md-3">
+	<a href="/books/<%= book.id %>">
+		<%= image_tag book.book_img.url(:book_index), class: "book" %>
+		
+	</a>
+	<div class="review-rating" style="margin-left: 50px;" data-score="<%= book.reviews.average(:rating) %>"> </div>
+</div>	
+

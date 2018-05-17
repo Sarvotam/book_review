@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: MyString
+  integer: MyString
+  seat_status: false
+  row_col: MyString
+
+two:
+  user_id: MyString
+  integer: MyString
+  seat_status: false
+  row_col: MyString

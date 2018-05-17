@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MovieReview</title>
+    <%= csrf_meta_tags %>
+   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <% if user_signed_in? %>
+    <div class="navbar navbar-default"> 
+      <div class="container">
+        <div class="navbar-head">
+          <%= link_to "Movie Review", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><!-- Button trigger modal -->
+<head>
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Trigger/Open The Modal -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <% if user_signed_in? %>
+<% @pending.each do |pen|  %>
+  <p>Book titled <B><%= pen.title %></B> is in pending || <%= link_to "cancel", book_path(pen.id), method: :delete %></p>
+<% end %>
+<% @accept.each do |acp| %>
+  <p><B><%= acp.title %></B>book accepted</p>
+<%end%>
+<% end%>
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</li>
+         <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                  
+          <% if user_signed_in? %>
+            <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
+            <% else %>
+              <li><%= link_to "Log In", new_user_session_path %></li>
+          <% end %>
+          <% if user_signed_in?%>
+          <li><%= link_to 'Profile', profiles_path %></li> 
+          <li><%= link_to "change password", edit_user_registration_path(current_user)%></li>
+          
+          
+          <%end%>
+            </ul>
+            </li>
+            </ul>
+
+
+         
+        </ul>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <% Category.all.each do |category| %>
+              <li class="<%= 'active' if params[:category] == category.name %>">
+                <%= link_to category.name, books_path(category: category.name), class: "link"  %>
+              </li>
+              <%end%>
+            </ul>
+          </li>
+          <% if user_signed_in? %>
+            <!-- <li><%= link_to "Add New Movie", new_book_path %></li>  -->
+                     <!--   <%= current_user.email%>
+                      <%= current_user.admin%> -->
+
+              <% if current_user.admin %>
+              <li><%= link_to "Add New Movie", new_book_path %></li> 
+                <li><%= link_to "admin",  admin_index_path %></li>
+                <!-- to show the which movies are approved and cancel that movie -->
+               <!--  <button id="myBtn" style="margin-top: 10px;">Movie request result</button> -->
+              <% end %>
+
+        
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  <!-- <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p> -->
+
+  
+<!--   <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %> -->
+  <div class="container">
+    <%= yield %>
+   </div>
+   <%else%>
+       <div class="navbar navbar-default"> 
+      <div class="container">
+        <div class="navbar-head">
+          <%= link_to "Movie Review", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          
+         
+                   <li><%= link_to "Sign up", new_user_registration_path %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
+            <% else %>
+              <li><%= link_to "Log In", new_user_session_path %></li>
+          <% end %>
+          <% if user_signed_in?%>
+          <li><%= link_to 'Profile', profiles_path %></li> 
+          <li><%= link_to "change password", edit_user_registration_path(current_user)%></li>
+          
+          
+          <%end%>
+            </ul>
+            </li>
+            </ul>
+
+
+         
+        </ul>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" s>Categories<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <% Category.all.each do |category| %>
+              <li class="<%= 'active' if params[:category] == category.name %>">
+                <%= link_to category.name, books_path(category: category.name), class: "link"  %>
+              </li>
+              <%end%>
+            </ul>
+          </li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Add Book", new_book_path %></li>
+                      <%= current_user.email%>
+<%= current_user.admin%>
+
+<% if current_user.admin %>
+  <h2><%= link_to "admin",  admin_index_path %></h2>
+  <li><%= link_to "Add New Movie", new_book_path %></li>
+<% end %>
+
+        
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  <!-- <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p> -->
+  <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+  <div class="container">
+    <%= yield %>
+  <%end%>
+   <% if flash[:notice] %>
+    <%= flash[:notice] %>
+  <% end %>
+  </body>
+
+</html>

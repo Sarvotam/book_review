@@ -1,0 +1,40 @@
+<h1 class="current-category"><%= params[:category] %></h1>
+
+<% if @books.count == 0 %>
+
+	<h1>There are no books currently in this category</h1>
+
+<% else %>	
+
+	<div class="row">
+	<%= render @books%>
+	</div>
+	
+	
+<% end %>	
+
+
+
+
+
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function() {
+			return $(this).attr('data-score')
+		}
+	});
+</script>
