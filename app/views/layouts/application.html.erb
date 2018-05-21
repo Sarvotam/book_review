@@ -61,6 +61,10 @@
 <body>
 
 <!-- Trigger/Open The Modal -->
+<<<<<<< HEAD
+=======
+<button id="myBtn" style="margin-top: 10px;">Book request result</button>
+>>>>>>> 5c0f1b5ac98db60bf7a844e39ad63b26d0490664
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -114,6 +118,7 @@ window.onclick = function(event) {
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+<<<<<<< HEAD
                   
           <% if user_signed_in? %>
             <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
@@ -126,6 +131,18 @@ window.onclick = function(event) {
           
           
           <%end%>
+=======
+           <% if user_signed_in?%>
+          <li><%= link_to 'Profile', profiles_path %></li> 
+          <li><%= link_to "change password", edit_user_registration_path(current_user)%></li>
+          <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
+          <%end%>
+       
+            
+           
+   
+         
+>>>>>>> 5c0f1b5ac98db60bf7a844e39ad63b26d0490664
             </ul>
             </li>
             </ul>
@@ -212,12 +229,17 @@ window.onclick = function(event) {
           </li>
           <% if user_signed_in? %>
             <li><%= link_to "Add Book", new_book_path %></li>
-                      <%= current_user.email%>
-<%= current_user.admin%>
+
+<!-- <%= current_user.email%>
+<%= current_user.admin%> -->
 
 <% if current_user.admin %>
+<<<<<<< HEAD
   <h2><%= link_to "admin",  admin_index_path %></h2>
   <li><%= link_to "Add New Movie", new_book_path %></li>
+=======
+  <li><%= link_to "admin",  admin_index_path %></li>
+>>>>>>> 5c0f1b5ac98db60bf7a844e39ad63b26d0490664
 <% end %>
 
         
@@ -232,10 +254,64 @@ window.onclick = function(event) {
       <% end %>
   <div class="container">
     <%= yield %>
+<<<<<<< HEAD
   <%end%>
    <% if flash[:notice] %>
     <%= flash[:notice] %>
   <% end %>
+=======
+   </div>
+   <%else%>
+       <div class="navbar navbar-default"> 
+      <div class="container">
+        <div class="navbar-head">
+          <%= link_to "Book Review", root_path, class: "navbar-brand" %>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          
+         
+                   <li><%= link_to "Sign up", new_user_registration_path %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
+            <% else %>
+              <li><%= link_to "Log In", new_user_session_path %></li>
+          <% end %>
+          <% if user_signed_in?%>
+          <li><%= link_to 'Profile', profiles_path %></li> 
+          <li><%= link_to "change password", edit_user_registration_path(current_user)%></li>
+          
+          
+          <%end%>
+            </ul>
+            </li>
+            </ul>
+
+
+         
+        </ul>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <% Category.all.each do |category| %>
+              <li class="<%= 'active' if params[:category] == category.name %>">
+                <%= link_to category.name, books_path(category: category.name), class: "link"  %>
+              </li>
+              <%end%>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <!-- <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p> -->
+  <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+  <div class="container">
+    <%= yield %>
+  <%end%>
+>>>>>>> 5c0f1b5ac98db60bf7a844e39ad63b26d0490664
   </body>
 
 </html>
