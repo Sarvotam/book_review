@@ -78,14 +78,11 @@ class BooksController < ApplicationController
 			@book = Book.find(params[:id])
 		end
 
-<<<<<<< HEAD
 		def authenticate_admin!
   		if !current_user.admin
   		redirect_to root_path
   		end
   	
   end
-=======
->>>>>>> 5c0f1b5ac98db60bf7a844e39ad63b26d0490664
 		
 end
